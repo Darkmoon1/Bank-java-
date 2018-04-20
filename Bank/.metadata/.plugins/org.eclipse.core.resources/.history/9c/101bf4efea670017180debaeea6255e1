@@ -1,0 +1,226 @@
+function login() {
+
+    var pw = $("#password").val();
+    var un = $("#userName").val();
+    if(pw==""||un==""){
+        err("Error","Please input information");
+        return;
+    }
+    if($("#drag_text").html()!="Identified Successsfully"){
+        wrn("Warning","Please drag the bg to Identify")
+        return;
+    }
+
+    if($("#wrongTimes").val()<='0'){
+        wrn("WrongTimes Limit:","You have wrong too much please exchange your password.");
+        return;
+    }
+    $.ajax({
+        type:"GET",
+        url:"test.php?name="+ un,
+        dataType:"json",
+        success:function (data) {
+            if(data.success){
+                info("Tips","Your value is:"+data.prf+" Please logout and reset passwords if unusual");
+                judge(data.msg,pw,data.pws);
+            }
+            else
+            err("Error",data.msg);
+        },
+        error:function (jqXHR) {
+            err("Error",jqXHR.status);
+        }
+    });
+}
+
+function regist() {
+/*    var request = new XMLHttpRequest();
+    request.open("POST","test.php");
+    var data = "name="+document.getElementById("rgName").value+"&password="+document.getElementById("rgPassword").value;
+    request.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+    request.send(data);
+    request.onreadystatechange = function () {
+        if(request.readyState === 4){
+            if(request.status === 200){
+                var data = JSON.parse(request.responseText);
+                if(data.success)
+                    document.getElementById("rgRes").innerHTML = data.msg;
+                else
+                    document.getElementById("rgRes").innerHTML = "error"+data.msg;
+            }else {
+                alert("发生错误"+data.msg);
+            }
+        }
+    }
+ */
+    var un = $("#rgName").val();
+    var pw = $("#rgPassword").val();
+    var pwC = $("#password_confirmation").val();
+    var qs = $("#select").val();
+    var as = $("#Answer").val();
+    var pf = $("#prefab").val();
+    console.log(pw+pwC+qs+as);
+
+
+    if(pw==pwC&&pw!=""&&as!=""&&qs!="none"&&un!=""&&pf!=""){
+        var reg = /^[A-Za-z0-9]{6,20}$/;
+        if(!reg.test(pw)){
+            wrn("Warning","Your Passwords are weak, Please reset them!");
+            return;
+        }
+
+        for(var i=0;i<300;i++)
+            pw = doSM3(pw);
+    }
+    else {
+        err("warning","Please input correct info");
+        return;
+    }
+    console.log(doSM3(qs));
+    $.ajax({
+        type:"POST",
+        url:"test.php",
+        dataType:"json",
+        data:{
+            name:un,
+            password:do_encrypt(pw),
+            question:doSM3(qs),
+            answer:doSM3(as),
+            prefab:pf,
+            method:"regist"
+        },
+        success:function (data) {
+            if(data.success)
+                scss("Success",data.msg);
+            else
+                err("Error",data.msg);
+        },
+        error:function (jqXHR) {
+            err("Error",regist+jqXHR.status);
+        }
+    });
+}
+
+function find_back() {
+    var un = $("#userName").val();
+    var pw = $("#password").val();
+    var pwC = $("#password_confirmation").val();
+    var qs = $("#select").val();
+    var as = $("#Answer").val();
+    console.log(pw+pwC+qs+as);
+
+    if(pw==pwC&&pw!=""&&as!=""&&qs!="none"&&un!=""){
+        var reg = /^[A-Za-z0-9]{6,20}$/;
+        if(!reg.test(pw)){
+            wrn("Warning","Your Passwords are weak, Please reset them!");
+            return;
+        }
+        for(var i=0;i<300;i++)
+            pw = doSM3(pw);
+    }
+    else {
+        wrn("Warning","Please input correct info");
+        return;
+    }
+    console.log(doSM3(qs));
+    $.ajax({
+        type:"POST",
+        url:"test.php",
+        dataType:"json",
+        data:{
+            name:un,
+            password:do_encrypt(pw),
+            question:doSM3(qs),
+            answer:doSM3(as),
+            method:"find_back"
+        },
+        success:function (data) {
+            if(data.success)
+            {
+                scss("Success",data.msg);
+                $("#wrongTimes").val('5');
+            }
+            else
+                err("Error",data.msg);
+        },
+        error:function (jqXHR) {
+            err("Error",regist+jqXHR.status);
+        }
+    });
+
+}
+
+function doSM3(msg) {
+
+    var msgData = CryptoJS.enc.Utf8.parse(msg);
+
+    var md;
+    var sm3keycur = new SM3Digest();
+    msgData = sm3keycur.GetWords(msgData.toString());
+    sm3keycur.BlockUpdate(msgData, 0, msgData.length);
+    var c3 = new Array(32);
+    sm3keycur.DoFinal(c3, 0);
+    var hashHex = sm3keycur.GetHex(c3).toString();
+    return hashHex;
+}
+
+
+
+function judge(i,pw,pws) {
+    for(var j=0;j<i-1;j++){
+        pw = doSM3(pw);
+    }
+    if(doSM3(pw)==pws){
+//        console.log(pw);
+//        $("#lgRes").html("登陆成功");
+        pw = do_encrypt(pw);
+//        console.log(pw);
+        $.ajax({
+            type:"POST",
+            url:"test.php",
+            dataType:"json",
+            data:{
+                name:$("#userName").val(),
+                timeout:0,
+                password:pw,
+                i:i-1,
+                method:"login"
+            },
+            success:function (data) {
+                if(data.success)
+                    scss("Success",data.msg);
+                else
+                    err("Error",data.msg);
+            },
+            error:function (jqXHR) {
+                err("Error",regist+jqXHR.status);
+            }
+        });
+    }
+    else {
+        console.log("Wp");
+        err("Error","Wrong Password");
+        var msg="You have "+$("#wrongTimes").val()+" left";
+        wrn("Warning",msg);
+        $("#wrongTimes").val($("#wrongTimes").val()-'1');
+        return;
+    }
+}
+/*
+function encrypt(msg) {
+    var rsa = new JSEncrypt();
+    rsa.setPublicKey("MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDpoODVtnSztGyb//p+g/Ob36jb3jzWzS2qovOjpY/rrTjwlVcQpB2m1nZDQNpTFsG8ZBl7uPw3M81lr7NRRn6tY7Om8tbOOsRgY6u0xwbgdRStFFvwPzZ1HehiQ6WB8za8cucCyvuqmBRp7HOjO4Aa9t0rIvZ/hoWMeSvjnAVbMwIDAQAB");
+    return rsa.encrypt(msg);
+}
+*/
+
+function do_encrypt(msg) {
+    var pubkey = document.getElementById("pubkey").value;
+    var encrypt = new JSEncrypt();
+  //  console.log(pubkey);
+    encrypt.setPublicKey(pubkey);
+    var encrypted = encrypt.encrypt(msg);
+    return encrypted;
+
+}  
+

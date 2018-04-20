@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="text/html">
+    
+    <script type="text/javascript" src="js/test.js"></script>
+<title>Insert title here</title>
+</head>
+	<body>
+	<h1>YHY的测试网页</h1>
+	<div></div>
+	<form action="MyServlet" method="post">
+	First name: <input	id="fname" type="text" name="fname" required="required"/>
+  	Last name: <input id="lname" type="text" name="lname" required="required"/>
+  	<input  id="regist"	type="submit"  value = "注册用户" onclick=""/>
+	
+	</form>
+</body>
+</html>

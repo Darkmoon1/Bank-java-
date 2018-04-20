@@ -1,0 +1,26 @@
+function regist() {
+
+    $.ajax({
+        type:"POST",
+        url:"test.php",
+        dataType:"json",
+        data:{
+            name:un,
+            password:do_encrypt(pw),
+            question:doSM3(qs),
+            answer:doSM3(as),
+            prefab:pf,
+            method:"regist"
+        },
+        success:function (data) {
+            if(data.success)
+                scss("Success",data.msg);
+            else
+                err("Error",data.msg);
+        },
+        error:function (jqXHR) {
+            err("Error",regist+jqXHR.status);
+        }
+    });
+}
+

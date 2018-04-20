@@ -1,0 +1,41 @@
+package yhy.study.Banking;
+
+public class TestBanking {
+
+	  public static void main(String[] args) {
+		  	Mysql.getConn();
+		  	Bank     bank = Bank.getBank();
+		    Customer customer;
+
+		    // Create several customers and their accounts
+		    bank.addCustomer("yhy", "Simms");
+		    customer = bank.getCustomer(5);
+		    SavingAccount savingAccount = new SavingAccount(500.00, 0.05);
+		    customer.addAccount(savingAccount);
+		    customer.addAccount(new CheckingAccount(200.00, savingAccount));
+		    Mysql.addCustomer(customer);
+		    
+		    bank.addCustomer("hyh", "Bryant");
+		    customer = bank.getCustomer(6);		 
+		    customer.addAccount(new CheckingAccount(200.00,null));
+		    Mysql.addCustomer(customer);
+		    
+		    bank.addCustomer("bbb", "Soley");
+		    customer = bank.getCustomer(7);
+		    customer.addAccount(new SavingAccount(1500.00, 0.05));
+		    customer.addAccount(new CheckingAccount(200.00,null));
+		    Mysql.addCustomer(customer);
+		    
+		    bank.addCustomer("hhh", "Soley");
+		    customer = bank.getCustomer(8);
+		    // Maria and Tim have a shared checking account
+		    customer.addAccount(bank.getCustomer(2).getAccount(1));
+		    customer.addAccount(new SavingAccount(150.00, 0.05));
+		    Mysql.addCustomer(customer);
+		    
+		    // Generate a report
+		    CustomerReport report = new CustomerReport();
+		    report.generateReport();
+		    Mysql.sqlClose();
+	  }
+	}

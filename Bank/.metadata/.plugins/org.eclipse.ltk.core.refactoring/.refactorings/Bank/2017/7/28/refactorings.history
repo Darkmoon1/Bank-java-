@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy element &apos;Mysql.java&apos; to &apos;BankData/src/yhy.study.Banking&apos;&#x0D;&#x0A;- Original project: &apos;Bank&apos;&#x0D;&#x0A;- Destination element: &apos;BankData/src/yhy.study.Banking&apos;&#x0D;&#x0A;- Original element: &apos;yhy.study.Banking.Mysql.java&apos;" description="Copy compilation unit" destination="=BankData/src&lt;yhy.study.Banking" element1="/src&lt;yhy.study.Banking{Mysql.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1499920680010" units="1" version="1.0"/>
+</session>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="text/html">
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/test.js"></script>
+    <style type="text/css">
+    div{
+    	border: 2px solid black;
+    }
+    
+    h1{
+    	align: center;
+    }
+    
+    </style>
+<title>bank</title>
+</head>
+	<body>
+	<h1>YHY的测试网页</h1>
+	<div>
+	<form action="MyServlet" method="post">
+	First name: <input	id="fname" type="text" name="fname" required="required"/>
+  	Last name: <input id="lname" type="text" name="lname" required="required"/>
+  	General Account:<input id="GA" type="text" name="GA" required="required"/>
+  	Saving Account:<input id="SA" type="text" name="SA" required="required"/>
+  	Checking Account:<input id="CA" type="text" name="CA" required="required"/>
+  	<input  id="regist"	type="submit"  value = "注册用户" />
+	</form>
+	</div>
+	<div>
+	<form action="MyReportServlet" method = "post">
+	<input  id="report" type="submit" value = "银行报告"/>
+	</form>
+	
+	</div>
+</body>
+</html>

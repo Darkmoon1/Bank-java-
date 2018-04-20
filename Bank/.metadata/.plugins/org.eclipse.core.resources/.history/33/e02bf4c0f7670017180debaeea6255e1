@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="text/html">
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/test.js"></script>
+    <style type="text/css">
+    body{     
+        text-align:center;    
+    }
+    div{
+    	border: 2px solid black;
+    	margin-left: 200px;
+    	margin-right: 200px;
+    	padding: 20px;
+    }
+    
+    h1{
+    	left: 
+    }
+    .re{
+    	height: 50px;
+    }
+    #report{
+    	margin-top: 13px;
+    }
+    label{
+    	display: inline-block;
+  		width: 200px;
+    	margin-right: 12px;
+    	vertical-align: baseline;
+    	text-align: right;
+    	font-size: 14px;
+    }
+    </style>
+<title>bank</title>
+</head>
+	<body>
+	<h1>YHY的测试网页</h1>
+	<div>
+	<form action="MyServlet" method="post">
+	<label>First name:</label>
+	<input	id="fname" type="text" name="fname" required="required"/>
+	<br>
+	<label>Last name: </label>
+  	<input id="lname" type="text" name="lname" required="required"/>
+	<br>
+  	<label>General Account:</label>
+  	<input id="GA" type="text" name="GA" required="required"/>
+	<br>
+  	<label>Saving Account:</label>
+  	<input id="SA" type="text" name="SA" required="required"/>
+	<br>
+  	<label>Checking Account:</label>
+  	<input id="CA" type="text" name="CA" required="required"/>
+	<br>
+  	<input  id="regist"	type="submit"  value = "注册用户" />
+	</form>
+	</div>
+	<div class = "re">
+	<form action="MyReportServlet" method = "post">
+	<input id="report" type="submit" value = "银行报告"/>
+	</form>
+	
+	</div>
+</body>
+</html>

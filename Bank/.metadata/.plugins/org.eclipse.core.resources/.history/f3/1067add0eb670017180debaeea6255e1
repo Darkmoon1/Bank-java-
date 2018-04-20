@@ -1,0 +1,23 @@
+function regist() {
+
+    $.ajax({
+        type:"POST",
+        url:"MyServlet.java",
+        dataType:"json",
+        data:{
+            fname:$('#fname').val(),
+            lname:$('#lname').val(),
+            method:"regist"
+        },
+        success:function (data) {
+            if(data.success)
+                alert("");
+            else
+                err("Error",data.msg);
+        },
+        error:function (jqXHR) {
+            err("Error",regist+jqXHR.status);
+        }
+    });
+}
+

@@ -1,0 +1,7 @@
+package yhy.study.Banking;
+
+import javax.servlet.http.HttpServlet;
+
+public class MyReportServlet extends HttpServlet {
+
+}

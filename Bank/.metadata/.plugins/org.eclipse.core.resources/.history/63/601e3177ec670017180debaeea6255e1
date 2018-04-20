@@ -1,0 +1,20 @@
+function regist() {
+
+    $.ajax({
+        type:"POST",
+        url:"MyServlet.java",
+        dataType:"json",
+        data:{
+            fname:$('#fname').val(),
+            lname:$('#lname').val(),
+            method:"regist"
+        },
+        success:function (data) {
+            console.log("³É¹¦");
+        },
+        error:function (jqXHR) {
+        	console.log("Ê§°Ü");
+        }
+    });
+}
+

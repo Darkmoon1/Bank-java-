@@ -1,0 +1,49 @@
+package yhy.study.Banking;
+import java.util.*;
+
+public class Bank {
+//	private Customer customers[];
+	private List<Customer> customers;
+
+	private	static Bank my_bank = new Bank();
+	
+	private Bank() {
+		// TODO Auto-generated constructor stub
+//		Customer [] customer = new Customer[10];
+			
+		/*	{new Customer("Simms", "Jane"),new Customer("Bryant", "Owen"),new Customer("Soley", "Tim"),
+				new Customer("Soley", "Maria"),new Customer("Yang", "Haoyu")
+		};*/
+		this.customers = Mysql.getCustomers();
+
+		
+	}
+	
+	public Iterator<Customer> getCustomers(){
+		return customers.iterator();
+	}
+	
+	public void addCustomer(String firstName, String lastName){
+//		Customer new_customer = new Customer(firstName, lastName);
+//		customers[numberOfCustomers] = new_customer;
+//		numberOfCustomers++;
+		customers.add(new Customer(firstName, lastName));
+	}
+	
+	public int getNumOfCustomers(){
+		return customers.size();
+	}
+	
+	public Customer getCustomer(int index){
+		//返回第i个客户 即customers[i-1]
+		return customers.get(index-1);
+	}
+	/*
+	 * 创建bank类实例化的函数
+	 */
+	public static Bank getBank(){
+		
+		return my_bank;
+	}
+	
+}
